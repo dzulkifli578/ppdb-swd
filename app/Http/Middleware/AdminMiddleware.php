@@ -3,10 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Cookie;
-use Exception;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 use Illuminate\Http\Request;
 
 class AdminMiddleware
@@ -20,24 +16,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $jwt = Cookie::get("jwt");
+        $peran = session("peran");
 
-        if (!$jwt)
-            return $next($request);
-
-        try {
-            $decoded = JWT::decode($jwt, new Key(env("APP_KEY"), "HS256"));
-        } catch (Exception $e) {
-            return $next($request);
-        }
-
-        if ($decoded->role !== "admin")
-            return $next($request);
-
-        session([
-            "username" => $decoded->username,
-            "role" => $decoded->role
-        ]);
+        if (!$peran)
+            return redirect()->route("login")->with("error", "Anda harus login terlebih dahulu.");
 
         return $next($request);
     }
