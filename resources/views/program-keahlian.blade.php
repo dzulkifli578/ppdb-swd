@@ -15,9 +15,14 @@
     @include('navbar')
 
     <!-- Header -->
-    <header class="bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl mx-6 my-5 p-5">
-        <h1 class="text-4xl font-bold">Program Keahlian SMK Swadhipa 2 Natar</h1>
-        <p class="text-lg mt-4">Pilih Program Keahlian Terbaik untuk Masa Depan Anda</p>
+    <header
+        class="group bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl mx-6 my-6 p-6 gap-y-6 hover:bg-warning ease-in-out duration-300">
+        <h1
+            class="font-bold text-center text-2xl md:text-3xl lg:text-4xl group-hover:text-warning-content ease-in-out duration-300">
+            Program Keahlian</h1>
+        <p
+            class="font-normal text-center text-lg md:text-xl lg:text-2xl group-hover:text-warning-content ease-in-out duration-300">
+            Pilih Program Keahlian Terbaik untuk Masa Depan Anda</p>
     </header>
 
     <!-- Content -->
@@ -26,60 +31,71 @@
         <section class="container mx-auto p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Rekayasa Perangkat Lunak -->
-                <div class="bg-base-300 rounded-xl shadow-xl">
-                    <img class="object-cover rounded-t-xl w-full h-48" src="https://via.placeholder.com/720x720"
+                <div
+                    class="group bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl hover:bg-neutral ease-in-out duration-300">
+                    <img class="object-contain rounded-t-xl w-full h-48" src="{{ asset('img/jurusan/rpl.png') }}"
                         alt="Rekayasa Perangkat Lunak">
-                    <div class="flex flex-col justify-start p-6">
-                        <h2 class="text-xl font-bold">Rekayasa Perangkat Lunak (RPL)</h2>
-                        <p class="text-gray-600 my-4">Belajar tentang cara memanipulasi sistem operasi komputer</p>
-                        <a href="#" class=btn btn-primary">Lihat
+                    <div class="flex flex-col w-full justify-start p-6 gap-y-2">
+                        <h2 class="text-xl font-bold group-hover:text-neutral-content">Rekayasa Perangkat Lunak (RPL)
+                        </h2>
+                        <p class="group-hover:text-neutral-content">Belajar tentang cara memanipulasi sistem operasi
+                            komputer</p>
+                        <a href="#" class="btn btn-primary">Lihat
                             Selengkapnya</a>
                     </div>
                 </div>
                 <!-- Teknik Komputer dan Jaringan -->
-                <div class="bg-base-300 rounded-xl shadow-xl">
-                    <img class="object-cover rounded-t-xl w-full h-48" src="https://via.placeholder.com/720x720"
-                        alt="Rekayasa Perangkat Lunak">
-                    <div class="flex flex-col justify-start p-6">
-                        <h2 class="text-xl font-bold">Teknik Komputer dan Jaringan (TKJ)</h2>
-                        <p class="text-gray-600 my-4">Belajar tentang cara membuat jaringan internet</p>
-                        <a href="#" class=btn btn-primary">Lihat
+                <div
+                    class="group bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl hover:bg-neutral ease-in-out duration-300">
+                    <img class="object-contain rounded-t-xl w-full h-48" src="{{ asset('img/jurusan/tkj.png') }}"
+                        alt="Teknik Komputer dan Jaringan">
+                    <div class="flex flex-col w-full justify-start p-6 gap-y-2">
+                        <h2 class="text-xl font-bold group-hover:text-neutral-content">Teknik Komputer dan Jaringan
+                            (TKJ)</h2>
+                        <p class="group-hover:text-neutral-content">Belajar tentang cara membuat jaringan internet</p>
+                        <a href="#" class="btn btn-primary">Lihat
                             Selengkapnya</a>
                     </div>
                 </div>
                 <!-- Teknik Instalasi Tenaga Listrik -->
-                <div class="bg-base-300 rounded-xl shadow-xl">
-                    <img class="object-cover rounded-t-xl w-full h-48" src="https://via.placeholder.com/720x720"
-                        alt="Rekayasa Perangkat Lunak">
-                    <div class="flex flex-col justify-start p-6">
+                <div
+                    class="group bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl hover:bg-neutral ease-in-out duration-300">
+                    <img class="object-contain rounded-t-xl w-full h-48" src="{{ asset('img/jurusan/titl.png') }}"
+                        alt="Teknik Instalasi Tenaga Listrik">
+                    <div class="flex flex-col w-full justify-start p-6 gap-y-2">
                         <h2 class="text-xl font-bold">Teknik Instalasi Tenaga Listrik (TITL)</h2>
-                        <p class="text-gray-600 my-4">Belajar tentang cara memanipulasi listrik supaya tidak tersetrum
+                        <p class="group-hover:text-neutral-content">Belajar tentang cara memanipulasi listrik supaya
+                            tidak tersetrum
                         </p>
-                        <a href="#" class=btn btn-primary">Lihat
+                        <a href="#" class="btn btn-primary">Lihat
                             Selengkapnya</a>
                     </div>
                 </div>
                 <!-- Teknik Kendaraan Ringan -->
-                <div class="bg-base-300 rounded-xl shadow-xl">
-                    <img class="object-cover rounded-t-xl w-full h-48" src="https://via.placeholder.com/720x720"
-                        alt="Rekayasa Perangkat Lunak">
-                    <div class="flex flex-col justify-start p-6">
+                <div
+                    class="group bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl hover:bg-neutral ease-in-out duration-300">
+                    <img class="object-contain rounded-t-xl w-full h-48" src="{{ asset('img/jurusan/tkr.png') }}"
+                        alt="Teknik Kendaraan Ringan">
+                    <div class="flex flex-col w-full justify-start p-6 gap-y-2">
                         <h2 class="text-xl font-bold">Teknik Kendaraan Ringan (TKR)</h2>
-                        <p class="text-gray-600 my-4">Belajar tentang cara bongkar pasang kendaraan ringan</p>
-                        <a href="#" class=btn btn-primary">Lihat
+                        <p class="group-hover:text-neutral-content">Belajar tentang cara bongkar pasang kendaraan ringan
+                        </p>
+                        <a href="#" class="btn btn-primary">Lihat
                             Selengkapnya</a>
                     </div>
                 </div>
 
                 <!-- Teknik dan Bisnis Sepeda Motor -->
-                <div class="bg-base-300 rounded-xl shadow-xl">
-                    <img class="object-cover rounded-t-xl w-full h-48" src="https://via.placeholder.com/720x720"
-                        alt="Rekayasa Perangkat Lunak">
-                    <div class="flex flex-col justify-start p-6">
+                <div
+                    class="group bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl hover:bg-neutral ease-in-out duration-300">
+                    <img class="object-contain rounded-t-xl w-full h-48" src="{{ asset('img/jurusan/tbsm.png') }}"
+                        alt="Teknik dan Bisnis Sepeda Motor">
+                    <div class="flex flex-col w-full justify-start p-6 gap-y-2">
                         <h2 class="text-xl font-bold">Teknik dan Bisnis Sepeda Motor (TBSM)</h2>
-                        <p class="text-gray-600 my-4">Belajar tentang cara mengendarai motor ugal-ugalan dengan selamat
+                        <p class="group-hover:text-neutral-content">Belajar tentang cara mengendarai motor ugal-ugalan
+                            dengan selamat
                         </p>
-                        <a href="#" class=btn btn-primary">Lihat
+                        <a href="#" class="btn btn-primary">Lihat
                             Selengkapnya</a>
                     </div>
                 </div>
