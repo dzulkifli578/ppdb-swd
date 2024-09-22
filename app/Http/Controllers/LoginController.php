@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
+use App\Models\Akun;
 use Firebase\JWT\JWT;
 
 class LoginController extends Controller
@@ -24,31 +24,31 @@ class LoginController extends Controller
      */
     public function prosesLogin()
     {
-        // Validate the request
         $validator = validator(request([
-            "username" => "required",
-            "password" => "required"
+            "nama_pengguna" => "required",
+            "kata_sandi" => "required"
         ]));
-
+    
         if ($validator->fails())
             return redirect()->route("login")->with(["validator_fails" => $validator->errors()]);
-
-        $account = Account::where("username", request("username"))->first();
-
-        if (!$account)
+    
+        $akun = Akun::where("nama_pengguna", request("nama_pengguna"))->first();
+    
+        if (!$akun)
             return redirect()->route("login")->with("akun_tidak_ditemukan", "Akun tidak ditemukan");
-
-        if (!password_verify(request("password"), $account->password))
+    
+        if (!password_verify(request("kata_sandi"), $akun->kata_sandi))
             return redirect()->route("login")->with("password_salah", "Kata sandi salah");
-
+    
         $payload = [
-            "username" => $account->username,
-            "role" => $account->role
+            "id" => $akun->id,
+            "nama_pengguna" => $akun->nama_pengguna,
+            "peran" => $akun->peran
         ];
-
-        $jwt = JWT::encode($payload, env("APP_KEY"), "HS256");
+    
+        $jwt = JWT::encode($payload, env("APP_KEY"), "HS384");
         $cookie = cookie("jwt", $jwt);
-
-        return redirect()->route("admin-dashboard")->withCookie($cookie)->with("login_sukses", "Login berhasil!");
-    }
+    
+        return redirect()->route("jembatan")->withCookie($cookie)->with("login_sukses", "Login berhasil!");
+    }    
 }
