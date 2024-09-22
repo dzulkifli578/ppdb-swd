@@ -18,7 +18,7 @@
                     <details>
                         <summary>Lainnya</summary>
                         <ul class="bg-base-100 rounded-t-none p-2">
-                            <li><a href="{{ route('beranda') }}">Beranda</a></li>
+                            <li><a href="{{ route('admin-dashboard') }}">Beranda</a></li>
                             <li><a href="{{ route('program-keahlian') }}">Program Keahlian</a></li>
                             <li><a href="{{ route('informasi-ppdb') }}">Informasi PPDB</a></li>
                             {{-- <li><a>Cara Pendaftaran</a></li> --}}
