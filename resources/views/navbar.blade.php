@@ -4,13 +4,13 @@
         <div class="navbar-start">
             <a href="{{ route('beranda') }}" class="flex flex-row items-center ml-4 cursor-pointer">
                 <img src="{{ asset('img/swadhipa.png') }}" alt="Logo Swadhipa" class="h-12 mr-4">
-                <p class="text-xl font-semibold">SMK Swadhipa 2 Natar</p>
+                <p class="text-base md:text-lg lg:text-xl text-nowrap font-semibold">SMK Swadhipa 2 Natar</p>
             </a>
         </div>
         
         <!-- Navbar End -->
         <div class="navbar-end">
-            <ul class="menu menu-horizontal px-1 font-semibold">
+            <ul class="menu menu-horizontal px-1 font-semibold z-20">
                 <li><a href="{{ route('login') }}">Login</a></li>
                 <li>
                     <details>
