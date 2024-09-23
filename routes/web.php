@@ -40,6 +40,18 @@ Route::prefix("/peran/admin")->middleware(AdminMiddleware::class)->group(functio
         Route::post("/detail/{id}", [AdminController::class, "editDetailPeserta"])->name("edit-detail-peserta");
         Route::post("/hapus/{id}", [AdminController::class, "hapusPeserta"])->name("hapus-peserta");
     });
+
+    // pengumuman
+    Route::get("/pengumuman", [AdminController::class, "pengumuman"])->name("pengumuman");
+    Route::post("/tambah-pengumuman", [AdminController::class, "tambahPengumuman"])->name("tambah-pengumuman");
+    Route::put("/edit-pengumuman/{id}", [AdminController::class, "editPengumuman"])->name("edit-pengumuman");
+    Route::delete("/hapus-pengumuman/{id}", [AdminController::class, "hapusPengumuman"])->name("hapus-pengumuman");
+    
+    // data peserta
+    Route::get("/peserta", [AdminController::class, "dataPeserta"])->name("data-peserta");
+    Route::post("/tambah-peserta", [AdminController::class, "tambahPeserta"])->name("tambah-peserta");
+    Route::post("/edit-peserta", [AdminController::class, "editPeserta"])->name("edit-peserta");
+    Route::post("/hapus-peserta", [AdminController::class, "hapusPeserta"])->name("hapus-peserta");
 });
 
 // peserta
