@@ -17,6 +17,7 @@ Route::prefix("/")->group(function () {
     Route::get("/informasi-ppdb", [RootController::class, "informasiPpdb"])->name("informasi-ppdb");
     Route::get("/formulir-pendaftaran", [RootController::class, "formulirPendaftaran"])->name("formulir-pendaftaran");
     Route::post("/formulir-pendaftaran/proses", [RootController::class, "prosesFormulirPendaftaran"])->name("proses-formulir-pendaftaran");
+    Route::get("/kontak", [RootController::class, "kontak"])->name("kontak");
     Route::get('/jembatan')->middleware(PeranMiddleware::class)->name("jembatan");
 });
 
