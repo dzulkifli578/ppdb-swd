@@ -24,13 +24,13 @@ class LoginController extends Controller
      */
     public function prosesLogin()
     {
-        $validator = validator(request([
-            "nama_pengguna" => "required",
-            "kata_sandi" => "required"
-        ]));
+        $validate = request()->validate([
+            'nama_pengguna' => 'required',
+            'kata_sandi' => 'required'
+        ]);
     
-        if ($validator->fails())
-            return redirect()->route("login")->with(["validator_fails" => $validator->errors()]);
+        if (!$validate)
+            return redirect()->route("login")->with("validate_fails", "Validate fails");
     
         $akun = Akun::where("nama_pengguna", request("nama_pengguna"))->first();
     
