@@ -15,13 +15,18 @@
     @include('admin.navbar')
 
     <!-- Header -->
-    <header class="bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl mx-6 my-5 p-5">
+    <header class="bg-base-300 flex flex-row justify-between items-center rounded-xl shadow-xl mx-6 my-5 p-5">
         <h1 class="text-4xl font-bold">Dashboard Admin</h1>
+        <div class="breadcrumbs text-sm">
+            <ul>
+                <li><a href="{{ route('admin-dashboard') }}">Dashboard</a></li>
+            </ul>
+        </div>
     </header>
 
     <!-- Content -->
     <content>
-        <div class="bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl mx-6 p-5">
+        <div class="bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl mx-6 my-6 p-6">
             <div class="container mx-auto">
                 <div class="flex flex-row justify-between items-center mb-5">
                     <h2 class="text-2xl font-bold">Data Pendaftar</h2>
@@ -66,7 +71,8 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->nisn }}</td>
                                     <td>{{ $item->program }}</td>
-                                    <td><button onclick="window.location.href='{{ route('detail-peserta', ['id' => $item->id]) }}'"
+                                    <td><button
+                                            onclick="window.location.href='{{ route('detail-peserta', ['id' => $item->id]) }}'"
                                             class="btn btn-info font-medium"><svg xmlns="http://www.w3.org/2000/svg"
                                                 fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                                 stroke="currentColor" class="size-6">
