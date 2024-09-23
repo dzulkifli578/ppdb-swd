@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Akun;
+use App\Models\Pengumuman;
 use App\Models\Program;
 use App\Models\Registration;
+use Carbon\Carbon;
 use DB;
 use Exception;
 
@@ -30,7 +33,6 @@ class AdminController extends Controller
      */
     public function importCsv()
     {
-        // Validate the request
         $validator = validator(request([
             "csv_file" => "required|mimes:csv"
         ]));
@@ -38,25 +40,19 @@ class AdminController extends Controller
         if ($validator->fails())
             return redirect()->back()->with("validator_fails", "Harus impor file CSV terlebih dahulu");
 
-        // Get the file
         $file = request()->file("csv_file");
         $path = $file->getRealPath();
 
-        // Read the file
         $csvData = file_get_contents($path);
 
-        // Check if the file is UTF-8 with BOM
         if (substr($csvData, 0, 3) == "\xEF\xBB\xBF") {
             $csvData = substr($csvData, 3);
         }
 
-        // Parse the CSV
         $data = array_map('str_getcsv', explode("\n", $csvData));
         $header = array_shift($data);
 
-        \Log::info('Imported Data:', $data);
 
-        // Create the import data
         $importData = [];
         foreach ($data as $row) {
             if (count($row) === count($header)) {
@@ -67,18 +63,10 @@ class AdminController extends Controller
             }
         }
 
-        // Log the data to insert
-        \Log::info('Data to Insert:', $importData);
-
-        // Insert the data
         try {
             foreach ($importData as $item) {
-                \Log::info('Checking item:', $item);
+                $item['birth_date'] = Carbon::createFromFormat('Y-m-d', $item['birth_date'])->format('Y-m-d');
 
-                // Convert the birth_date to Carbon
-                $item['birth_date'] = \Carbon\Carbon::createFromFormat('Y-m-d', $item['birth_date'])->format('Y-m-d');
-
-                // Check if the data already exists
                 $exists = DB::table('registrations')
                     ->where('nisn', $item['nisn'])
                     ->where('account_id', $item['account_id'])
@@ -90,8 +78,6 @@ class AdminController extends Controller
 
             return redirect()->back()->with("success", "Berhasil mengimpor data!");
         } catch (Exception $e) {
-            // Log error untuk debugging
-            \Log::error('Import Error:', ['message' => $e->getMessage()]);
             return redirect()->back()->with("error", "Tidak bisa mengimpor data duplikat");
         }
     }
@@ -151,6 +137,110 @@ class AdminController extends Controller
     }
 
     /**
+     * Generate a PDF of the registrations.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function pdf()
+    {
+        $registration = Registration::join("accounts", "registrations.account_id", "=", "accounts.id")
+            ->join("programs", "registrations.program_id", "=", "programs.id")
+            ->select("registrations.*", "accounts.username as name", "programs.name as program")
+            ->get();
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView("admin.pdf", compact("registration"));
+
+        return $pdf->download("data-pendaftar.pdf");
+    }
+
+    public function pengumuman()
+    {
+        $pengumuman = Pengumuman::leftJoin("akun", "penerima_id", "akun.id")
+            ->select("pengumuman.*", "akun.nama_pengguna as penerima")
+            ->orderBy("id")
+            ->get();
+
+        $akun = Akun::all();
+
+        return view("admin.pengumuman", compact("pengumuman", "akun"));
+    }
+
+
+    public function tambahPengumuman()
+    {
+        $validate = request()->validate([
+            'judul' => 'required',
+            'isi' => 'required',
+            'tipe' => 'required',
+            'penerima_id' => 'required_if:tipe,privat'
+        ]);
+
+        if (!$validate)
+            return redirect()->back()->with('validator_fails', 'Data gagal ditambahkan');
+
+        $pengumuman = Pengumuman::insert($validate);
+
+        if (!$pengumuman)
+            return redirect()->back()->with('gagal_edit', 'Gagal mengedit data pengumuman');
+
+        return redirect()->back()->with('berhasil_edit', 'Berhasil mengedit data pengumuman');
+    }
+
+    /**
+     * Edit a pengumuman.
+     * 
+     * This function will edit a pengumuman with the given id.
+     * 
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function editPengumuman($id)
+    {
+        $validate = request()->validate([
+            'judul' => 'required',
+            'isi' => 'required',
+            'tipe' => 'required',
+            'penerima_id' => 'required_if:tipe,privat'
+        ]);
+
+        if (!$validate)
+            return redirect()->back()->with('validator_fails', 'Data gagal ditambahkan');
+
+        $pengumuman = Pengumuman::where('id', $id)->update($validate);
+
+        if (!$pengumuman)
+            return redirect()->back()->with('gagal_edit', 'Gagal mengedit data pengumuman');
+
+        return redirect()->back()->with('berhasil_edit', 'Berhasil mengedit data pengumuman');
+    }
+
+    public function hapusPengumuman($id)
+    {
+        $pengumuman = Pengumuman::find($id)->delete();
+
+        if (!$pengumuman)
+            return redirect()->back()->with('gagal_hapus', 'Gagal menghapus data pengumuman');
+
+        return redirect()->back()->with('berhasil_hapus', 'Berhasil menghapus data pengumuman');
+
+    }
+
+    public function dataPeserta()
+    {
+        return view("admin.pengumuman");
+    }
+
+    public function tambahPeserta()
+    {
+        // todo
+    }
+
+    public function editPeserta()
+    {
+        // todo
+    }
+
+    /**
      * Delete a registration.
      * 
      * @param int $id
@@ -166,23 +256,6 @@ class AdminController extends Controller
         }
 
         return redirect()->back()->with("berhasil_hapus", "Berhasil menghapus data");
-    }
-
-    /**
-     * Generate a PDF of the registrations.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function pdf()
-    {
-        $registration = Registration::join("accounts", "registrations.account_id", "=", "accounts.id")
-            ->join("programs", "registrations.program_id", "=", "programs.id")
-            ->select("registrations.*", "accounts.username as name", "programs.name as program")
-            ->get();
-
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView("admin.pdf", compact("registration"));
-
-        return $pdf->download("data-pendaftar.pdf");
     }
 
     /**
