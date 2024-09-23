@@ -27,7 +27,8 @@ class RootController extends Controller
      */
     public function programKeahlian()
     {
-        return view("program-keahlian");
+        $jurusan = Jurusan::all();
+        return view("program-keahlian", compact("jurusan"));
     }
 
     /**
@@ -53,6 +54,11 @@ class RootController extends Controller
     {
         $jurusan = Jurusan::all();
         return view("formulir-pendaftaran", compact("jurusan"));
+    }
+
+    public function kontak()
+    {
+        return view("kontak");
     }
 
     /**
