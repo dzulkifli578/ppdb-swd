@@ -10,6 +10,8 @@ class Jurusan extends Model
 
     protected $fillable = [
         'nama',
+        'deskripsi',
+        'gambar'
     ];
 
     public $timestamps = true;
