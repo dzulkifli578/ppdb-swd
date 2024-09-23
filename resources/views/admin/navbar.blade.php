@@ -18,12 +18,9 @@
                     <details>
                         <summary>Lainnya</summary>
                         <ul class="bg-base-100 rounded-t-none p-2">
-                            <li><a href="{{ route('admin-dashboard') }}">Beranda</a></li>
-                            <li><a href="{{ route('program-keahlian') }}">Program Keahlian</a></li>
-                            <li><a href="{{ route('informasi-ppdb') }}">Informasi PPDB</a></li>
-                            {{-- <li><a>Cara Pendaftaran</a></li> --}}
-                            <li><a href="{{ route('formulir-pendaftaran') }}">Formulir Pendaftaran</a></li>
-                            <li><a>Kontak</a></li>
+                            <li><a href="{{ route('admin-dashboard') }}">Dashboard</a></li>
+                            <li><a href="{{ route('pengumuman') }}">Pengumuman</a></li>
+                            <li><a href="{{ route('data-peserta') }}">Data Peserta</a></li>
                         </ul>
                     </details>
                 </li>
