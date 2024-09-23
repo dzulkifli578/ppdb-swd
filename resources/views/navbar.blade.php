@@ -20,7 +20,7 @@
                             <li><a href="{{ route('program-keahlian') }}">Program Keahlian</a></li>
                             <li><a href="{{ route('informasi-ppdb') }}">Informasi PPDB</a></li>
                             <li><a href="{{ route('formulir-pendaftaran') }}">Formulir Pendaftaran</a></li>
-                            <li><a href="#">Kontak</a></li> <!-- Placeholder link -->
+                            <li><a href="{{ route('kontak') }}">Kontak</a></li>
                         </ul>
                     </details>
                 </li>
