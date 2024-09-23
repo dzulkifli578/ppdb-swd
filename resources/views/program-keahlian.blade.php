@@ -30,75 +30,20 @@
         <!-- Program Keahlian -->
         <section class="container mx-auto p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Rekayasa Perangkat Lunak -->
-                <div
-                    class="group bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl hover:bg-neutral ease-in-out duration-300">
-                    <img class="object-contain rounded-t-xl w-full h-48" src="{{ asset('img/jurusan/rpl.png') }}"
-                        alt="Rekayasa Perangkat Lunak">
-                    <div class="flex flex-col w-full justify-start p-6 gap-y-2">
-                        <h2 class="text-xl font-bold group-hover:text-neutral-content">Rekayasa Perangkat Lunak (RPL)
-                        </h2>
-                        <p class="group-hover:text-neutral-content">Belajar tentang cara memanipulasi sistem operasi
-                            komputer</p>
-                        <a href="#" class="btn btn-primary">Lihat
-                            Selengkapnya</a>
+                @foreach ($jurusan as $item)
+                    <div
+                        class="group bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl hover:bg-neutral ease-in-out duration-300">
+                        <img class="object-contain rounded-t-xl w-full h-48" src="{{ asset($item->gambar) }}"
+                            alt="{{ $item->nama }}">
+                        <div class="flex flex-col w-full justify-start p-6 gap-y-2">
+                            <h2 class="text-xl font-bold group-hover:text-neutral-content">{{ $item->nama }}
+                            </h2>
+                            <p class="group-hover:text-neutral-content">{{ $item->deskripsi }}</p>
+                            <a href="#" class="btn btn-primary">Lihat
+                                Selengkapnya</a>
+                        </div>
                     </div>
-                </div>
-                <!-- Teknik Komputer dan Jaringan -->
-                <div
-                    class="group bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl hover:bg-neutral ease-in-out duration-300">
-                    <img class="object-contain rounded-t-xl w-full h-48" src="{{ asset('img/jurusan/tkj.png') }}"
-                        alt="Teknik Komputer dan Jaringan">
-                    <div class="flex flex-col w-full justify-start p-6 gap-y-2">
-                        <h2 class="text-xl font-bold group-hover:text-neutral-content">Teknik Komputer dan Jaringan
-                            (TKJ)</h2>
-                        <p class="group-hover:text-neutral-content">Belajar tentang cara membuat jaringan internet</p>
-                        <a href="#" class="btn btn-primary">Lihat
-                            Selengkapnya</a>
-                    </div>
-                </div>
-                <!-- Teknik Instalasi Tenaga Listrik -->
-                <div
-                    class="group bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl hover:bg-neutral ease-in-out duration-300">
-                    <img class="object-contain rounded-t-xl w-full h-48" src="{{ asset('img/jurusan/titl.png') }}"
-                        alt="Teknik Instalasi Tenaga Listrik">
-                    <div class="flex flex-col w-full justify-start p-6 gap-y-2">
-                        <h2 class="text-xl font-bold">Teknik Instalasi Tenaga Listrik (TITL)</h2>
-                        <p class="group-hover:text-neutral-content">Belajar tentang cara memanipulasi listrik supaya
-                            tidak tersetrum
-                        </p>
-                        <a href="#" class="btn btn-primary">Lihat
-                            Selengkapnya</a>
-                    </div>
-                </div>
-                <!-- Teknik Kendaraan Ringan -->
-                <div
-                    class="group bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl hover:bg-neutral ease-in-out duration-300">
-                    <img class="object-contain rounded-t-xl w-full h-48" src="{{ asset('img/jurusan/tkr.png') }}"
-                        alt="Teknik Kendaraan Ringan">
-                    <div class="flex flex-col w-full justify-start p-6 gap-y-2">
-                        <h2 class="text-xl font-bold">Teknik Kendaraan Ringan (TKR)</h2>
-                        <p class="group-hover:text-neutral-content">Belajar tentang cara bongkar pasang kendaraan ringan
-                        </p>
-                        <a href="#" class="btn btn-primary">Lihat
-                            Selengkapnya</a>
-                    </div>
-                </div>
-
-                <!-- Teknik dan Bisnis Sepeda Motor -->
-                <div
-                    class="group bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl hover:bg-neutral ease-in-out duration-300">
-                    <img class="object-contain rounded-t-xl w-full h-48" src="{{ asset('img/jurusan/tbsm.png') }}"
-                        alt="Teknik dan Bisnis Sepeda Motor">
-                    <div class="flex flex-col w-full justify-start p-6 gap-y-2">
-                        <h2 class="text-xl font-bold">Teknik dan Bisnis Sepeda Motor (TBSM)</h2>
-                        <p class="group-hover:text-neutral-content">Belajar tentang cara mengendarai motor ugal-ugalan
-                            dengan selamat
-                        </p>
-                        <a href="#" class="btn btn-primary">Lihat
-                            Selengkapnya</a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </section>
     </content>
