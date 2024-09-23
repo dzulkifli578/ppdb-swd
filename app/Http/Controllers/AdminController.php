@@ -33,11 +33,11 @@ class AdminController extends Controller
      */
     public function importCsv()
     {
-        $validator = validator(request([
+        $validate = request()->validate([
             "csv_file" => "required|mimes:csv"
-        ]));
+        ]);
 
-        if ($validator->fails())
+        if (!$validate)
             return redirect()->back()->with("validator_fails", "Harus impor file CSV terlebih dahulu");
 
         $file = request()->file("csv_file");
@@ -45,22 +45,18 @@ class AdminController extends Controller
 
         $csvData = file_get_contents($path);
 
-        if (substr($csvData, 0, 3) == "\xEF\xBB\xBF") {
+        if (substr($csvData, 0, 3) == "\xEF\xBB\xBF")
             $csvData = substr($csvData, 3);
-        }
 
         $data = array_map('str_getcsv', explode("\n", $csvData));
         $header = array_shift($data);
 
-
         $importData = [];
         foreach ($data as $row) {
-            if (count($row) === count($header)) {
+            if (count($row) === count($header))
                 $importData[] = array_combine($header, $row);
-            } else {
-                // Log baris yang tidak sesuai
+            else
                 \Log::warning('Row with unexpected column count:', $row);
-            }
         }
 
         try {
@@ -153,6 +149,13 @@ class AdminController extends Controller
         return $pdf->download("data-pendaftar.pdf");
     }
 
+    /**
+     * Show the pengumuman page for admin.
+     * 
+     * This function will show the pengumuman page for the admin.
+     * 
+     * @return \Illuminate\Contracts\View\View
+     */
     public function pengumuman()
     {
         $pengumuman = Pengumuman::leftJoin("akun", "penerima_id", "akun.id")
@@ -165,7 +168,13 @@ class AdminController extends Controller
         return view("admin.pengumuman", compact("pengumuman", "akun"));
     }
 
-
+    /**
+     * Tambah a pengumuman.
+     * 
+     * This function will add a pengumuman with the given data.
+     * 
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function tambahPengumuman()
     {
         $validate = request()->validate([
@@ -181,9 +190,9 @@ class AdminController extends Controller
         $pengumuman = Pengumuman::insert($validate);
 
         if (!$pengumuman)
-            return redirect()->back()->with('gagal_edit', 'Gagal mengedit data pengumuman');
+            return redirect()->back()->with('gagal_edit', 'Gagal menambahkan data pengumuman');
 
-        return redirect()->back()->with('berhasil_edit', 'Berhasil mengedit data pengumuman');
+        return redirect()->back()->with('berhasil_edit', 'Berhasil menambahkan data pengumuman');
     }
 
     /**
@@ -222,9 +231,15 @@ class AdminController extends Controller
             return redirect()->back()->with('gagal_hapus', 'Gagal menghapus data pengumuman');
 
         return redirect()->back()->with('berhasil_hapus', 'Berhasil menghapus data pengumuman');
-
     }
 
+    /**
+     * Show the data peserta page.
+     * 
+     * This function will show the data peserta page.
+     * 
+     * @return \Illuminate\Contracts\View\View
+     */
     public function dataPeserta()
     {
         return view("admin.pengumuman");
