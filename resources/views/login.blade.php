@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
 </head>
 
-<body>
+<body class="bg-base-100">
     <!-- Content -->
     <content class="flex flex-col justify-center items-center h-screen">
         <div class="basis-3 border boder-base-content rounded-xl p-6">
