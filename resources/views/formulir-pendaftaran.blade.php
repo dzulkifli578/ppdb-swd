@@ -70,7 +70,7 @@
                         <div class="label">
                             <span class="label-text">Agama</span>
                         </div>
-                        <select name="agama" class="select select-bordered select-accent" required>
+                        <select name="agama_id" class="select select-bordered select-accent" required>
                             <option disabled selected>Pilih salah satu</option>
                             <option value="Islam">Islam</option>
                             <option value="Kristen Katolik">Kristen Katolik</option>
