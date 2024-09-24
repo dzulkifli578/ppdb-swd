@@ -10,14 +10,12 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
 </head>
 
-<body>
+<body class="bg-base-100">
     <!-- Navbar -->
     @include('navbar')
 
     <!-- Header -->
-    <header class="bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl mx-6 my-5 p-5">
-        <h1 class="text-4xl font-bold">Formulir Pendaftaran</h1>
-    </header>
+    @include('admin.components.header')
 
     <!-- Content -->
     <content>
