@@ -70,37 +70,23 @@ class RootController extends Controller
      */
     public function prosesFormulirPendaftaran()
     {
-        request()->validate([
-            'nama' => 'required|string|max:255',
-            'tempat_lahir' => 'required|string|max:255',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|string',
-            'agama' => 'required|string',
-            'alamat' => 'required|string|max:255',
-            'asal_sekolah' => 'required|string|max:255',
-            'jurusan_pertama_id' => 'required|string',
-            'jurusan_kedua_id' => 'required|string',
-            'nama_ortu' => 'required|string|max:255',
-            'alamat_ortu' => 'required|string|max:255',
-            'pekerjaan_ortu' => 'required|string|max:255',
-            'no_telepon' => 'required|string|max:20',
+        $validate = request()->validate([
+            'nama' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'jenis_kelamin' => 'required',
+            'agama_id' => 'required',
+            'alamat' => 'required',
+            'asal_sekolah' => 'required',
+            'jurusan_pertama_id' => 'required',
+            'jurusan_kedua_id' => 'required',
+            'nama_ortu' => 'required',
+            'alamat_ortu' => 'required',
+            'pekerjaan_ortu' => 'required',
+            'no_telepon' => 'required',
         ]);
 
-        $registrasi = Registrasi::insert([
-            'nama' => request()->nama,
-            'tempat_lahir' => request()->tempat_lahir,
-            'tanggal_lahir' => request()->tanggal_lahir,
-            'jenis_kelamin' => request()->jenis_kelamin,
-            'agama' => request()->agama,
-            'alamat' => request()->alamat,
-            'asal_sekolah' => request()->asal_sekolah,
-            'jurusan_pertama_id' => request()->jurusan_pertama_id,
-            'jurusan_kedua_id' => request()->jurusan_kedua_id,
-            'nama_ortu' => request()->nama_ortu,
-            'alamat_ortu' => request()->alamat_ortu,
-            'pekerjaan_ortu' => request()->pekerjaan_ortu,
-            'no_telepon' => request()->no_telepon,
-        ]);
+        $registrasi = Registrasi::insert($validate);
 
         if (!$registrasi)
             return redirect()->back()->with('failed', 'Data gagal disimpan!');
