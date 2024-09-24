@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Agama;
 use App\Models\Akun;
+use App\Models\Jurusan;
 use App\Models\Pengumuman;
 use App\Models\Program;
+use App\Models\Registrasi;
 use App\Models\Registration;
 use Carbon\Carbon;
 use DB;
@@ -18,12 +21,18 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
+        $header = [
+            'name' => 'Dashboard',
+            'breadcrumbs' => 'Dashboard',
+            'route' => route('admin-dashboard')
+        ];
+
         $registration = Registration::join("accounts", "registrations.account_id", "=", "accounts.id")
             ->join("programs", "registrations.program_id", "=", "programs.id")
             ->select("registrations.*", "accounts.username as name", "programs.name as program")
             ->get();
 
-        return view("admin.dashboard", compact("registration"));
+        return view("admin.dashboard", compact("header", "registration"));
     }
 
     /**
@@ -158,6 +167,12 @@ class AdminController extends Controller
      */
     public function pengumuman()
     {
+        $header = [
+            'name' => 'Pengumuman',
+            'breadcrumbs' => 'Pengumuman',
+            'route' => route('pengumuman')
+        ];
+
         $pengumuman = Pengumuman::leftJoin("akun", "penerima_id", "akun.id")
             ->select("pengumuman.*", "akun.nama_pengguna as penerima")
             ->orderBy("id")
@@ -165,7 +180,7 @@ class AdminController extends Controller
 
         $akun = Akun::all();
 
-        return view("admin.pengumuman", compact("pengumuman", "akun"));
+        return view("admin.pengumuman", compact("header", "pengumuman", "akun"));
     }
 
     /**
@@ -242,17 +257,92 @@ class AdminController extends Controller
      */
     public function dataPeserta()
     {
-        return view("admin.pengumuman");
+        $header = [
+            'name' => 'Data Peserta',
+            'breadcrumbs' => 'Data Peserta',
+            'route' => route('data-peserta')
+        ];
+
+        $registrasi = Registrasi::join("jurusan as jurusan_pertama", "jurusan_pertama_id", "jurusan_pertama.id")
+            ->join("jurusan as jurusan_kedua", "jurusan_kedua_id", "jurusan_kedua.id")
+            ->join("agama", "agama_id", "agama.id")
+            ->select("registrasi.*")
+            ->get();
+
+        $jurusan = Jurusan::all();
+        return view("admin.data-peserta", compact("header", "registrasi", "jurusan"));
     }
 
     public function tambahPeserta()
     {
-        // todo
+        $jurusan = Jurusan::all();
+        return view("admin.tambah-peserta", compact("jurusan"));
     }
 
-    public function editPeserta()
+    public function prosesTambahPeserta()
     {
-        // todo
+        $validate = request()->validate([
+            'nama' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'jenis_kelamin' => 'required',
+            'agama_id' => 'required',
+            'alamat' => 'required',
+            'asal_sekolah' => 'required',
+            'jurusan_pertama_id' => 'required',
+            'jurusan_kedua_id' => 'required',
+            'nama_ortu' => 'required',
+            'alamat_ortu' => 'required',
+            'pekerjaan_ortu' => 'required',
+            'no_telepon' => 'required',
+        ]);
+
+        $registrasi = Registrasi::insert($validate);
+
+        if (!$registrasi)
+            return redirect()->back()->with('failed', 'Data gagal disimpan!');
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan!');
+    }
+
+    public function editPeserta($id)
+    {
+        $registrasi = Registrasi::join("jurusan as jurusan_pertama", "jurusan_pertama_id", "jurusan_pertama.id")
+            ->join("jurusan as jurusan_kedua", "jurusan_kedua_id", "jurusan_kedua.id")
+            ->join("agama", "agama_id", "agama.id")
+            ->select("registrasi.*")
+            ->find($id)->first();
+
+        $jurusan = Jurusan::all();
+        $agama = Agama::all();
+
+        return view("admin.edit-peserta", compact("registrasi", "jurusan", "agama"));
+    }
+
+    public function prosesEditPeserta($id)
+    {
+        $validate = request()->validate([
+            'nama' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'jenis_kelamin' => 'required',
+            'agama_id' => 'required',
+            'alamat' => 'required',
+            'asal_sekolah' => 'required',
+            'jurusan_pertama_id' => 'required',
+            'jurusan_kedua_id' => 'required',
+            'nama_ortu' => 'required',
+            'alamat_ortu' => 'required',
+            'pekerjaan_ortu' => 'required',
+            'no_telepon' => 'required',
+        ]);
+
+        $registrasi = Registrasi::find($id)->update($validate);
+
+        if (!$registrasi)
+            return redirect()->back()->with('failed', 'Data gagal diperbarui!');
+
+        return redirect()->back()->with('success', 'Data berhasil diperbarui!');
     }
 
     /**
