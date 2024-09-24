@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
 </head>
 
-<body>
+<body class="bg-base-100">
     <!-- Navbar -->
     @include('navbar')
 
