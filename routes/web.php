@@ -47,12 +47,14 @@ Route::prefix("/peran/admin")->middleware(AdminMiddleware::class)->group(functio
     Route::post("/tambah-pengumuman", [AdminController::class, "tambahPengumuman"])->name("tambah-pengumuman");
     Route::put("/edit-pengumuman/{id}", [AdminController::class, "editPengumuman"])->name("edit-pengumuman");
     Route::delete("/hapus-pengumuman/{id}", [AdminController::class, "hapusPengumuman"])->name("hapus-pengumuman");
-    
+
     // data peserta
     Route::get("/peserta", [AdminController::class, "dataPeserta"])->name("data-peserta");
-    Route::post("/tambah-peserta", [AdminController::class, "tambahPeserta"])->name("tambah-peserta");
-    Route::post("/edit-peserta", [AdminController::class, "editPeserta"])->name("edit-peserta");
-    Route::post("/hapus-peserta", [AdminController::class, "hapusPeserta"])->name("hapus-peserta");
+    Route::get("/tambah-peserta", [AdminController::class, "tambahPeserta"])->name("tambah-peserta");
+    Route::post("/proses-tambah-peserta", [AdminController::class, "prosesTambahPeserta"])->name("proses-tambah-peserta");
+    Route::get("/edit-peserta/{id}", [AdminController::class, "editPeserta"])->name("edit-peserta");
+    Route::put("/proses-edit-peserta/{id}", [AdminController::class, "prosesEditPeserta"])->name("proses-edit-peserta");
+    Route::delete("/hapus-peserta/{id}", [AdminController::class, "hapusPeserta"])->name("hapus-peserta");
 });
 
 // peserta
