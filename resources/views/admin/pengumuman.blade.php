@@ -15,26 +15,19 @@
     @include('admin.navbar')
 
     <!-- Header -->
-    <header class="bg-base-300 flex flex-row justify-between items-center rounded-xl shadow-xl mx-6 my-5 p-5">
-        <h1 class="text-4xl font-bold">Pengumuman</h1>
-        <div class="breadcrumbs text-sm">
-            <ul>
-                <li><a href="{{ route('pengumuman') }}">Pengumuman</a></li>
-            </ul>
-        </div>
-    </header>
+    @include('admin.components.header')
 
     <!-- Content -->
     <content>
         <div class="bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl mx-6 my-6 p-6 gap-6">
 
-            <div class="flex flex-col w-full gap-y-6">
+            <div class="flex flex-col w-full overflow-x-auto gap-y-6">
                 <!-- Sub Header -->
                 <div class="flex flex-row justify-between items-center">
-                    <h2 class="text-2xl font-bold" x-show="tipe === 'semua'">Semua Pengumuman</h2>
-                    <h2 class="text-2xl font-bold" x-show="tipe === 'publik'">Pengumuman Publik</h2>
-                    <h2 class="text-2xl font-bold" x-show="tipe === 'privat'">Pengumuman Privat</h2>
-                    @include('admin.pengumuman.tambah-pengumuman')
+                    <h2 class="text-base font-bold md:text-xl lg:text-2xl mr-6" x-show="tipe === 'semua'">Semua Pengumuman</h2>
+                    <h2 class="text-base font-bold md:text-xl lg:text-2xl mr-6" x-show="tipe === 'publik'">Pengumuman Publik</h2>
+                    <h2 class="text-base font-bold md:text-xl lg:text-2xl mr-6" x-show="tipe === 'privat'">Pengumuman Privat</h2>
+                    @include('admin.components.tambah-pengumuman')
                 </div>
 
                 <!-- Tipe -->
@@ -57,7 +50,46 @@
                 </label>
             </div>
 
-            @include('admin.pengumuman.tabel-pengumuman')
+            <!-- Table Pengumuman -->
+            <div class="w-full flex overflow-x-auto">
+                <table class="table bg-base-100 w-full">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Judul</th>
+                            <th>Isi</th>
+                            <th>Tipe</th>
+                            <th>Penerima</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTable">
+                        @foreach ($pengumuman as $item)
+                            <tr>
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->judul }}</td>
+                                <td>{{ $item->isi }}</td>
+                                <td>{{ $item->tipe }}</td>
+                                @if ($item->tipe === 'privat')
+                                    <td>{{ $item->penerima }}</td>
+                                @else
+                                    <td>-</td>
+                                @endif
+                                <td>
+                                    @include('admin.components.edit-pengumuman')
+                                </td>
+                                <td>
+                                    <form action="{{ route('hapus-pengumuman', ['id' => $item->id]) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-error font-medium">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </content>
 
