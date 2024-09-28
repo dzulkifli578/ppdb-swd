@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Data Peserta</title>
+    <title>Tambah Data Peserta</title>
     <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body class="bg-class-100">
     <!-- Navbar -->
-    @include('admin.navbar')
+    @include('admin.components.navbar')
 
     <!-- Header -->
     @include('admin.components.header')
@@ -24,8 +24,24 @@
                 class="bg-base-300 rounded-xl shadow-xl p-6">
                 @csrf
                 <div class="grid grid-cols-2 gap-x-5 gap-y-2">
+                    <!-- Bagian 0 -->
+                    <h2 class="md:col-span-2 font-bold text-xl md:text-2xl lg:text-3xl my-2">Bagian 0</h2>
+                    <!-- Akun -->
+                    <label class="form-control w-full md:col-span-2">
+                        <div class="label">
+                            <span class="label-text">Akun</span>
+                        </div>
+                        <select name="akun_id" class="select select-bordered select-accent" required>
+                            <option disabled selected>Pilih salah satu</option>
+                            @foreach ($akun as $item)
+                                <option value="{{ $item->id }}">
+                                    {{ $item->nama_pengguna }}</option>
+                            @endforeach
+                        </select>
+                    </label>
+
                     <!-- Bagian 1 -->
-                    <h2 class="col-span-2 font-bold text-2xl md:text-3xl my-2">Bagian 1</h2>
+                    <h2 class="md:col-span-2 font-bold text-xl md:text-2xl lg:text-3xl my-2">Bagian 1</h2>
                     <!-- Nama Lengkap -->
                     <label class="form-control w-full">
                         <div class="label">
@@ -86,7 +102,7 @@
                     </label>
 
                     <!-- Bagian 2 -->
-                    <h2 class="col-span-2 font-bold text-2xl md:text-3xl my-2">Bagian 2</h2>
+                    <h2 class="md:col-span-2 font-bold text-xl md:text-2xl lg:text-3xl my-2">Bagian 2</h2>
                     <!-- Asal Sekolah -->
                     <label class="form-control w-full col-span-2">
                         <div class="label">
@@ -121,7 +137,7 @@
                     </label>
 
                     <!-- Bagian 3 -->
-                    <h2 class="col-span-2 font-bold text-2xl md:text-3xl my-2">Bagian 3</h2>
+                    <h2 class="md:col-span-2 font-bold text-xl md:text-2xl lg:text-3xl my-2">Bagian 3</h2>
                     <!-- Nama Orang Tua / Wali -->
                     <label class="form-control w-full">
                         <div class="label">
@@ -160,6 +176,13 @@
             </form>
         </div>
     </content>
+
+    <!-- Modal -->
+    @include('admin.data-peserta.modal', [
+        'id' => 'notificationModal',
+        'title' => '',
+        'message' => '',
+    ])
 
     <!-- Footer -->
     @include('footer')
