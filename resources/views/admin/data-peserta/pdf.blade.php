@@ -45,18 +45,20 @@
             <th>Nama</th>
             <th>Tempat Lahir</th>
             <th>Tanggal Lahir</th>
-            <th>Program Keahlian</th>
+            <th>Jurusan Pertama</th>
+            <th>Jurusan Kedua</th>
             <th>Status</th>
         </tr>
         <tr>
-            @foreach ($registration as $item)
+            @foreach ($registrasi as $item)
+                <td>{{ $item->id }}</td>
+                <td>{{ $item->nama }}</td>
+                <td>{{ $item->tempat_lahir }}</td>
+                <td>{{ $item->tanggal_lahir }}</td>
+                <td>{{ $item->nama_jurusan_pertama }}</td>
+                <td>{{ $item->nama_jurusan_kedua }}</td>
+                <td>{{ $item->status }}</td>
             @endforeach
-            <td>{{ $item->id }}</td>
-            <td>{{ $item->name }}</td>
-            <td>{{ $item->birth_place }}</td>
-            <td>{{ $item->birth_date }}</td>
-            <td>{{ $item->program }}</td>
-            <td>{{ $item->status }}</td>
         </tr>
     </table>
 </body>
