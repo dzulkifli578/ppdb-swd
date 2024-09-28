@@ -8,11 +8,12 @@
     <title>Pengumuman</title>
     <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="{{ asset('js/feather.min.js') }}"></script>
 </head>
 
 <body class="bg-class-100" x-data="{ tipe: 'semua' }">
     <!-- Navbar -->
-    @include('admin.navbar')
+    @include('admin.components.navbar')
 
     <!-- Header -->
     @include('admin.components.header')
@@ -24,14 +25,17 @@
             <div class="flex flex-col w-full overflow-x-auto gap-y-6">
                 <!-- Sub Header -->
                 <div class="flex flex-row justify-between items-center">
-                    <h2 class="text-base font-bold md:text-xl lg:text-2xl mr-6" x-show="tipe === 'semua'">Semua Pengumuman</h2>
-                    <h2 class="text-base font-bold md:text-xl lg:text-2xl mr-6" x-show="tipe === 'publik'">Pengumuman Publik</h2>
-                    <h2 class="text-base font-bold md:text-xl lg:text-2xl mr-6" x-show="tipe === 'privat'">Pengumuman Privat</h2>
-                    @include('admin.components.tambah-pengumuman')
+                    <h2 class="text-base font-bold md:text-xl lg:text-2xl mr-6" x-show="tipe === 'semua'">Semua
+                        Pengumuman</h2>
+                    <h2 class="text-base font-bold md:text-xl lg:text-2xl mr-6" x-show="tipe === 'publik'">Pengumuman
+                        Publik</h2>
+                    <h2 class="text-base font-bold md:text-xl lg:text-2xl mr-6" x-show="tipe === 'privat'">Pengumuman
+                        Privat</h2>
+                    @include('admin.pengumuman.tambah-pengumuman')
                 </div>
 
                 <!-- Tipe -->
-                <select name="tipe" class="select select-bordered w-full" x-model="tipe">
+                <select name="tipe" class="select select-bordered w-full" x-model="tipe" id="filterTipe">
                     <option disabled value="">Tipe</option>
                     <option value="semua">Semua</option>
                     <option value="publik">Publik</option>
@@ -76,7 +80,7 @@
                                     <td>-</td>
                                 @endif
                                 <td>
-                                    @include('admin.components.edit-pengumuman')
+                                    @include('admin.pengumuman.edit-pengumuman')
                                 </td>
                                 <td>
                                     <form action="{{ route('hapus-pengumuman', ['id' => $item->id]) }}" method="post">
@@ -93,30 +97,18 @@
         </div>
     </content>
 
+    <!-- Modal -->
+    @include('admin.pengumuman.modal', [
+        'id' => 'notificationModal',
+        'title' => '',
+        'message' => '',
+    ])
+
     <!-- Footer -->
     @include('footer')
 
     <!-- Live Search Feature -->
     <script src="{{ asset('js/pengumuman.js') }}"></script>
-
-    @if (session('validator_fails') || session('success'))
-        <dialog class="modal">
-            <div class="modal-box">
-                @if (session('validator_fails'))
-                    <h3 class="text-lg font-bold">Validator Fails</h3>
-                    <p class="py-4">{{ session('validator_fails') }}</p>
-                @elseif (session('success'))
-                    <h3 class="text-lg font-bold">Sukses</h3>
-                    <p class="py-4">{{ session('success') }}</p>
-                @endif
-                <div class="modal-action">
-                    <form method="dialog">
-                        <button class="btn">Close</button>
-                    </form>
-                </div>
-            </div>
-        </dialog>
-    @endif
 </body>
 
 </html>
