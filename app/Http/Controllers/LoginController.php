@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Akun;
 use Firebase\JWT\JWT;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -12,7 +13,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function login()
+    public function login(Request $request)
     {
         return view("login");
     }
@@ -22,16 +23,13 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function prosesLogin()
+    public function prosesLogin(Request $request)
     {
-        $validate = request()->validate([
+        $validate = $request->validate([
             'nama_pengguna' => 'required',
             'kata_sandi' => 'required'
         ]);
-    
-        if (!$validate)
-            return redirect()->route("login")->with("validate_fails", "Validate fails");
-    
+        
         $akun = Akun::where("nama_pengguna", request("nama_pengguna"))->first();
     
         if (!$akun)
