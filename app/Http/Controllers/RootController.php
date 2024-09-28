@@ -3,7 +3,15 @@
 namespace App\Http\Controllers;
 use App\Models\Jurusan;
 use App\Models\Registrasi;
+use Illuminate\Http\Request;
 
+/**
+ * Class RootController
+ * 
+ * This class is used to handle the request from the root.
+ * 
+ * @package App\Http\Controllers
+ */
 class RootController extends Controller
 {
     /**
@@ -11,9 +19,10 @@ class RootController extends Controller
      * 
      * This function will show the beranda page.
      * 
+     * @param Request $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function beranda()
+    public function beranda(Request $request)
     {
         return view("beranda");
     }
@@ -23,9 +32,10 @@ class RootController extends Controller
      * 
      * This function will show the program keahlian page.
      * 
+     * @param Request $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function programKeahlian()
+    public function programKeahlian(Request $request)
     {
         $jurusan = Jurusan::all();
         return view("program-keahlian", compact("jurusan"));
@@ -36,9 +46,10 @@ class RootController extends Controller
      * 
      * This function will show the informasi PPDB page.
      * 
+     * @param Request $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function informasiPpdb()
+    public function informasiPpdb(Request $request)
     {
         return view("informasi-ppdb");
     }
@@ -48,15 +59,24 @@ class RootController extends Controller
      * 
      * This function will show the formulir pendaftaran page.
      * 
+     * @param Request $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function formulirPendaftaran()
+    public function formulirPendaftaran(Request $request)
     {
         $jurusan = Jurusan::all();
         return view("formulir-pendaftaran", compact("jurusan"));
     }
 
-    public function kontak()
+    /**
+     * Show the kontak page.
+     * 
+     * This function will show the kontak page.
+     * 
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function kontak(Request $request)
     {
         return view("kontak");
     }
@@ -66,11 +86,12 @@ class RootController extends Controller
      * 
      * This function will validate and process the registration form.
      * 
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function prosesFormulirPendaftaran()
+    public function prosesFormulirPendaftaran(Request $request)
     {
-        $validate = request()->validate([
+        $validate = $request->validate([
             'nama' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
