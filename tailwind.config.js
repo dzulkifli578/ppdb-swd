@@ -1,10 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./resources/views/*",
-    "./resources/views/admin/*",
-    "./resources/views/admin/components/*",
-    "./resources/views/peserta/*"
+    "./resources/views/**/*.blade.php"
   ],
   theme: {
     extend: {},
