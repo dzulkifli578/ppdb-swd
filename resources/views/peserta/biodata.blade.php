@@ -17,7 +17,7 @@
     <header
         class="group bg-base-300 flex flex-col justify-center items-center rounded-xl shadow-xl mx-6 my-6 p-6 gap-y-6 hover:bg-warning ease-in-out duration-300">
         <h1
-            class="font-bold text-center text-2xl md:text-3xl lg:text-4xl group-hover:text-warning-content ease-in-out duration-300">
+            class="font-bold text-center text-xl md:text-2xl lg:text-3xl group-hover:text-warning-content ease-in-out duration-300">
             Biodata Peserta</h1>
     </header>
 
@@ -27,9 +27,9 @@
             <form action="{{ route('proses-biodata-peserta', ['id' => $registrasi->id]) }}" method="post"
                 class="bg-base-300 rounded-xl shadow-xl p-6">
                 @csrf
-                <div class="grid grid-cols-2 gap-x-5 gap-y-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-2">
                     <!-- Bagian 1 -->
-                    <h2 class="col-span-2 font-bold text-2xl md:text-3xl my-2">Bagian 1</h2>
+                    <h2 class="md:col-span-2 font-bold text-xl md:text-2xl lg:text-3xl my-2">Bagian 1</h2>
                     <!-- Nama Lengkap -->
                     <label class="form-control w-full">
                         <div class="label">
@@ -76,7 +76,8 @@
                         <select name="agama_id" class="select select-bordered select-accent" required>
                             <option disabled selected>Pilih salah satu</option>
                             @foreach ($agama as $item)
-                                <option value="{{ $item->id }}" {{ $registrasi->agama_id === $item->id ? 'selected' : '' }}>
+                                <option value="{{ $item->id }}"
+                                    {{ $registrasi->agama_id === $item->id ? 'selected' : '' }}>
                                     {{ $item->nama }}</option>
                             @endforeach
                         </select>
@@ -91,9 +92,9 @@
                     </label>
 
                     <!-- Bagian 2 -->
-                    <h2 class="col-span-2 font-bold text-2xl md:text-3xl my-2">Bagian 2</h2>
+                    <h2 class="md:col-span-2 font-bold text-xl md:text-2xl lg:text-3xl my-2">Bagian 2</h2>
                     <!-- Asal Sekolah -->
-                    <label class="form-control w-full col-span-2">
+                    <label class="form-control w-full md:col-span-2">
                         <div class="label">
                             <span class="label-text">Asal Sekolah</span>
                         </div>
@@ -130,7 +131,7 @@
                     </label>
 
                     <!-- Bagian 3 -->
-                    <h2 class="col-span-2 font-bold text-2xl md:text-3xl my-2">Bagian 3</h2>
+                    <h2 class="md:col-span-2 font-bold text-xl md:text-2xl lg:text-3xl my-2">Bagian 3</h2>
                     <!-- Nama Orang Tua / Wali -->
                     <label class="form-control w-full">
                         <div class="label">
@@ -167,11 +168,18 @@
                             placeholder="Masukkan no. telepon siswa..." class="input input-bordered input-accent"
                             required />
                     </label>
-                    <button type="submit" class="btn btn-primary font-bold col-span-2 mt-6">Edit</button>
+                    <button type="submit" class="btn btn-primary font-bold md:col-span-2 mt-6">Edit</button>
                 </div>
             </form>
         </div>
     </content>
+
+    <!-- Modal -->
+    @include('peserta.components.modal', [
+        'id' => 'notificationModal',
+        'title' => '',
+        'message' => '',
+    ])
 
     <!-- Footer -->
     @include('footer')
