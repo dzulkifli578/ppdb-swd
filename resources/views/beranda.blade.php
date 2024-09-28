@@ -29,7 +29,7 @@
             </div>
         </hero>
 
-        <div class="flex flex-col gap-y-6 mx-6 my-6 ">
+        <div class="flex flex-col gap-y-6 mx-6 my-6">
             <!-- Tentang Sekolah -->
             <section class="flex justify-center">
                 <div
