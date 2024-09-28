@@ -1,10 +1,10 @@
 <!-- Button -->
-<button @click="document.getElementById('editPengumuman').showModal()" class="btn btn-warning font-medium">
+<button @click="document.getElementById('{{ $item->id }}').showModal()" class="btn btn-warning font-medium">
     Edit
 </button>
 
 <!-- Modal -->
-<dialog id="editPengumuman" class="modal">
+<dialog id="{{ $item->id }}" class="modal">
     <div class="modal-box">
         <h3 class="text-lg font-bold">Edit Pengumuman</h3>
         <form id="editPengumumanForm" action="{{ route('edit-pengumuman', ['id' => $item->id]) }}" method="POST">
@@ -42,8 +42,8 @@
                 <div class="form-control mt-4" x-show="publikasi === 'privat'">
                     <select name="penerima_id" class="select select-bordered w-full">
                         <option disabled selected>Pilih salah satu</option>
-                        @foreach ($akun as $item)
-                            <option value="{{ $item->id }}">{{ $item->nama_pengguna }}</option>
+                        @foreach ($akun as $akun)
+                            <option value="{{ $akun->id }}">{{ $akun->nama_pengguna }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -62,7 +62,7 @@
             <div class="modal-action">
                 <button type="submit" class="btn btn-primary">Simpan</button>
                 <button type="button" class="btn btn-secondary"
-                    @click="document.getElementById('editPengumuman').close();">Batal</button>
+                    @click="document.getElementById('{{ $item->id }}').close()">Batal</button>
             </div>
         </form>
     </div>
